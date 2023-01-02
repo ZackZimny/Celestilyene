@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Entities.*;
 import com.mygdx.game.GameHelpers.LevelLoader;
+import com.badlogic.gdx.audio.Music;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -30,6 +31,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	AssetManager assetManager;
 	SpriteBatch spriteBatch;
 	LevelLoader levelLoader;
+	Music GameMusic;
 	@Override
 	public void create () {
 		shapeRenderer = new ShapeRenderer();
@@ -40,6 +42,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		spriteBatch = new SpriteBatch();
 		levelLoader = new LevelLoader("Easy6.tmx");
 		levelLoader.generateMap();
+		GameMusic = Gdx.audio.newMusic(Gdx.files.internal("ZimzMusic2 copy 3.wav"));
+		GameMusic.setLooping(true);
+		GameMusic.play();
 	}
 
 	@Override
