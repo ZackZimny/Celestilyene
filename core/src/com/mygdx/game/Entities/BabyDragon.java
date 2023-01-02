@@ -55,7 +55,7 @@ public class BabyDragon extends Enemy {
     }
 
     @Override
-    public void handlePhysics(float deltaTime, Player player, ArrayList<Entity> unpassableEntities){
+    public void handlePhysics(float deltaTime, Player player, ArrayList<Entity> unpassableEntities, int[][] unpassableMap){
         stateTime += deltaTime;
         fireTimer += deltaTime;
         if(fireTimer > 3){
@@ -64,7 +64,7 @@ public class BabyDragon extends Enemy {
             generateFireballs(player);
         }
         playerIsFacingLeft = player.getHurtBox().getX() < getHurtBox().getX();
-        super.handlePhysics(deltaTime, player, unpassableEntities);
+        super.handlePhysics(deltaTime, player, unpassableEntities, unpassableMap);
     }
 
 }

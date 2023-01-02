@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -23,12 +24,14 @@ public class LevelLoader {
     private ArrayList<Entity> entities = new ArrayList<>();
     private ArrayList<Enemy> enemies = new ArrayList<>();
     private ArrayList<Entity> unpassableEntities = new ArrayList<>();
+    private int[][] unpassableMap;
     private Player player;
     public LevelLoader(String fileName){
         tiledMap = new TmxMapLoader().load(fileName);
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1/32f);
         decorationLayer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
         objectLayer = (TiledMapTileLayer) tiledMap.getLayers().get("Object Layer");
+        unpassableMap = new int[objectLayer.getHeight()][objectLayer.getWidth()];
     }
 
     public void generateMap(){
@@ -63,10 +66,11 @@ public class LevelLoader {
                 player = player1;
                 return player1;
             case 7:
-                Entity tree = new Entity(x * 32, y * 32, 64, 64);
+                Entity tree = new Entity(x * 32, y * 32, 42, 60, -11, 0);
                 tree.setTexture(new Texture(Gdx.files.internal("Tree.png")));
                 tree.setPassable(true);
                 unpassableEntities.add(tree);
+                unpassableMap[y][x] = 1;
                 return tree;
             case 9:
                 Enemy slime = new Enemy(x*32, y*32, 32, 32, 50, "Slime.png");
@@ -81,20 +85,24 @@ public class LevelLoader {
         return new Entity(0, 0, 0, 0);
     }
 
-    public void render(OrthographicCamera camera, SpriteBatch spriteBatch){
+    public void render(OrthographicCamera camera, SpriteBatch spriteBatch, ShapeRenderer shapeRenderer){
         //tiledMapRenderer.renderTileLayer(decorationLayer);
         tiledMapRenderer.setView(camera);
         for(Entity e : entities){
             if(e.getTexture() != null)
                 e.render(spriteBatch);
         }
+        for(Entity e : entities){
+            e.showBoxes(shapeRenderer);
+        }
     }
 
     public void handlePhysics(float deltaTime, ShapeRenderer shapeRenderer){
         player.move(deltaTime, unpassableEntities, shapeRenderer);
         ArrayList<Enemy> deadEnemies = new ArrayList<>();
+        MapProperties props = tiledMap.getProperties();
         for(Enemy e : enemies){
-            e.handlePhysics(deltaTime, player, unpassableEntities);
+            e.handlePhysics(deltaTime, player, unpassableEntities, unpassableMap);
             if(e.isDead())
                 deadEnemies.add(e);
         }
