@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.GameHelpers.Box;
-import com.mygdx.game.GameHelpers.DynamicBox;
+import com.mygdx.game.GameHelpers.Boxes.Box;
+import com.mygdx.game.GameHelpers.Boxes.DynamicBox;
 
 import java.util.ArrayList;
 
@@ -55,7 +55,7 @@ public class BabyDragon extends Enemy {
     }
 
     @Override
-    public void handlePhysics(float deltaTime, Player player, ArrayList<Entity> unpassableEntities){
+    public void handlePhysics(float deltaTime, Player player, ArrayList<Entity> unpassableEntities, int[][] unpassableMap){
         stateTime += deltaTime;
         fireTimer += deltaTime;
         if(fireTimer > 3){
@@ -64,7 +64,7 @@ public class BabyDragon extends Enemy {
             generateFireballs(player);
         }
         playerIsFacingLeft = player.getHurtBox().getX() < getHurtBox().getX();
-        super.handlePhysics(deltaTime, player, unpassableEntities);
+        super.handlePhysics(deltaTime, player, unpassableEntities, unpassableMap);
     }
 
 }

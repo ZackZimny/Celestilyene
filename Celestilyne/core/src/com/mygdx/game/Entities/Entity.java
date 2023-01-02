@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.GameHelpers.Box;
-import com.mygdx.game.GameHelpers.DynamicBox;
+import com.mygdx.game.GameHelpers.Boxes.Box;
+import com.mygdx.game.GameHelpers.Boxes.DynamicBox;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -24,6 +24,8 @@ public class Entity {
     private Vector2 movement;
     private boolean isPassable = false;
     private Texture texture;
+    private float xOffset = 0f;
+    private float yOffset = 0f;
 
     /**
      * Creates an Entity using a ForceBox and an ArrayList of HitBoxes
@@ -47,6 +49,12 @@ public class Entity {
         hitBoxes = new ArrayList<>();
     }
 
+    public Entity (float x, float y, float width, float height, float xOffset, float yOffset){
+        hurtBox = new Box(x - width / 2, y - height / 2, width, height);
+        hitBoxes = new ArrayList<>();
+        this.xOffset = xOffset;
+        this.yOffset = yOffset;
+    }
     /**
      * Displays the Entity's hurt boxes and hit boxes on screen (for DEBUG mode only)
      * @param sr ShapeRenderer that renders the shapes that are drawn in the function
@@ -65,7 +73,7 @@ public class Entity {
     }
 
     public void render(SpriteBatch spriteBatch){
-        spriteBatch.draw(texture, getHurtBox().getX(), getHurtBox().getY());
+        spriteBatch.draw(texture, getHurtBox().getX() + xOffset, getHurtBox().getY() + yOffset);
     }
 
     protected void changePos(Vector2 v){
@@ -73,9 +81,9 @@ public class Entity {
     }
 
     public boolean runInto(Entity entity){
-        Box ghostBox = new Box(getHurtBox().getPositionVector().add(movement.scl(2)),
+        Box ghostBox = new Box(getHurtBox().getPositionVector().cpy().add(movement.cpy().scl(2)),
                 getHurtBox().getWidth(), getHurtBox().getHeight());
-        return !entity.isPassable() && entity.getHurtBox().intersects(ghostBox);
+        return entity.getHurtBox().intersects(ghostBox);
     }
 
     public void removeIntersectedHitBoxes(Entity other){
@@ -100,7 +108,6 @@ public class Entity {
         return hitBoxes;
     }
 
-
     protected void removeHitBox(int i){
         hitBoxes.remove(i);
     }
@@ -114,12 +121,17 @@ public class Entity {
     public Vector2 getMovement() {
         return movement;
     }
+
     public void setMovement(Vector2 movement) {
         this.movement = movement;
     }
 
     public boolean isPassable() {
         return isPassable;
+    }
+
+    public void setPassable(boolean passable) {
+        isPassable = passable;
     }
 
     public void setTexture(Texture texture) {

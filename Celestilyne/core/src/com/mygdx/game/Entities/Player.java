@@ -7,9 +7,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.GameHelpers.Box;
+import com.mygdx.game.GameHelpers.Boxes.Box;
 import com.mygdx.game.GameHelpers.Direction;
-import com.mygdx.game.GameHelpers.DynamicBox;
+import com.mygdx.game.GameHelpers.Boxes.DynamicBox;
 
 import java.util.ArrayList;
 
@@ -25,10 +25,11 @@ public class Player extends Entity {
     private TextureRegion currSprite;
     private Texture magicTexture;
     private Texture wand;
+    private float magicMeter = 1f;
     private ArrayList<DynamicBox> magicBoxes = new ArrayList<>();
 
-    public Player() {
-        super(new Box(0, 0, 20, 22), new ArrayList<Box>());
+    public Player(int x, int y) {
+        super(new Box(x, y, 20, 22), new ArrayList<Box>());
         texture = new Texture(Gdx.files.internal("Player.png"));
         magicTexture = new Texture(Gdx.files.internal("Magic.png"));
         wand = new Texture(Gdx.files.internal("Wand.png"));
@@ -40,6 +41,7 @@ public class Player extends Entity {
         upSprite = regions[0][2];
         leftSprite = regions[0][3];
         currSprite = upSprite;
+        setTexture(texture);
     }
 
     public void updateMoveVec(){
@@ -51,7 +53,7 @@ public class Player extends Entity {
         moveVec = new Vector2(0, 0);
         for(int i = 0; i < keys.length; i++){
             if(Gdx.input.isKeyPressed(keys[i])){
-                moveVec = getMovement().add(moves[i]);
+                moveVec = moves[i];
                 moving = true;
                 direction = directions[i];
             }
@@ -94,14 +96,20 @@ public class Player extends Entity {
             removeIntersectedHitBoxes(e);
         }
         changePos(getMovement());
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && magicMeter > 0){
             DynamicBox box = new DynamicBox(getHurtBox().getCenter().add(getMousePos().nor().scl(wand.getWidth())).sub(getLeftHandOffset(), 0),
                     10, 10, getMousePos().nor().scl(7));
             addHitBox(box);
+            magicMeter -= 0.2f;
         }
         moveDynamicHitBoxes();
+        magicMeter += 0.005f;
+        if(magicMeter > 1){
+            magicMeter = 1;
+        }
     }
 
+    @Override
     public void render(SpriteBatch spriteBatch){
         Vector2 center = getHurtBox().getCenter();
         float xPos = center.x - currSprite.getRegionWidth() / 2f;
@@ -122,8 +130,7 @@ public class Player extends Entity {
     }
 
     private Vector2 getMousePos(){
-        return new Vector2(Gdx.input.getX(), Gdx.input.getY()).sub(new Vector2(Gdx.graphics.getWidth() / 2f,
-                Gdx.graphics.getHeight() / 2f)).scl(1, -1);
+        return new Vector2(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY()).sub(getHurtBox().getCenter()).nor();
     }
 
 }

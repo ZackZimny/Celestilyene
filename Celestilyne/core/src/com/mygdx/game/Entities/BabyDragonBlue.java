@@ -3,7 +3,7 @@ package com.mygdx.game.Entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.GameHelpers.DynamicBox;
+import com.mygdx.game.GameHelpers.Boxes.DynamicBox;
 
 public class BabyDragonBlue extends BabyDragon {
     public BabyDragonBlue(float x, float y) {

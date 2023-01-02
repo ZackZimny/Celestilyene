@@ -3,9 +3,11 @@ package com.mygdx.game.Entities;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.GameHelpers.Box;
+import com.mygdx.game.GameHelpers.Boxes.Box;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.PriorityQueue;
 
 public class Enemy extends Entity {
     private Texture texture;
@@ -19,9 +21,10 @@ public class Enemy extends Entity {
         super(new Box(x, y, width, height), new ArrayList<Box>());
         this.speed = speed;
         texture = new Texture(textureFile);
+        setTexture(texture);
     }
 
-    public void handlePhysics(float deltaTime, Player player, ArrayList<Entity> unpassableEntities){
+    public void handlePhysics(float deltaTime, Player player, ArrayList<Entity> unpassableEntities, int[][] unpassableMap){;
         setMovement(player.getHurtBox().getCenter().sub(getHurtBox().getCenter()).nor().scl(deltaTime).scl(speed));
         for(int i = 0; i < player.getHitBoxes().size(); i++){
             if(player.getHitBoxes().get(i).intersects(getHurtBox())){
@@ -40,6 +43,8 @@ public class Enemy extends Entity {
             if(runInto(e)){
                 if(isHit){
                     backForce.scl(-1);
+                } else {
+                    setMovement(new Vector2(0, 0));
                 }
             }
             removeIntersectedHitBoxes(e);

@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.GameHelpers.Box;
-import com.mygdx.game.GameHelpers.DynamicBox;
+import com.mygdx.game.GameHelpers.Boxes.Box;
+import com.mygdx.game.GameHelpers.Boxes.DynamicBox;
 
 import java.util.ArrayList;
 
@@ -42,10 +42,11 @@ public class Mage extends Enemy {
         for(Box hitBox : getHitBoxes()){
             spriteBatch.draw(magicTexture, hitBox.getX(), hitBox.getY());
         }
+
     }
 
     @Override
-    public void handlePhysics(float deltaTime, Player player, ArrayList<Entity> unpassableEntities) {
+    public void handlePhysics(float deltaTime, Player player, ArrayList<Entity> unpassableEntities, int[][] unpassableMap) {
         stateTime += deltaTime;
         if(stateTime > 2){
             isAttacking = true;
@@ -56,6 +57,6 @@ public class Mage extends Enemy {
             }
             stateTime = 0;
         }
-        super.handlePhysics(deltaTime, player, unpassableEntities);
+        super.handlePhysics(deltaTime, player, unpassableEntities, unpassableMap);
     }
 }
