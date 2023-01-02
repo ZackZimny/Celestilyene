@@ -1,0 +1,54 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "TutorialLevel1.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "Celestilyne.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Forest.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Test.tmx": {
+            "scale": 0.6363020833333333,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 476.97470737496934,
+                "y": 392.89514610788257
+            }
+        },
+        "TutorialLevel1.tmx": {
+            "scale": 3,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 527.8333333333333,
+                "y": 361.66666666666663
+            }
+        }
+    },
+    "last.imagePath": "C:/Users/zzimn/OneDrive/Desktop/Projects/Celestilyne/assets",
+    "map.lastUsedFormat": "tmx",
+    "openFiles": [
+        "Celestilyne.tsx",
+        "Test.tmx",
+        "Forest.tsx",
+        "Test.tmx",
+        "TutorialLevel1.tmx"
+    ],
+    "project": "MainWorld.tiled-project",
+    "recentFiles": [
+        "Celestilyne.tsx",
+        "Test.tmx",
+        "Forest.tsx",
+        "TutorialLevel1.tmx"
+    ]
+}
