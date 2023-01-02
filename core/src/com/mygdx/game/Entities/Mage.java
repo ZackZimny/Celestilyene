@@ -46,7 +46,7 @@ public class Mage extends Enemy {
     }
 
     @Override
-    public void handlePhysics(float deltaTime, Player player, ArrayList<Entity> unpassableEntities) {
+    public void handlePhysics(float deltaTime, Player player, ArrayList<Entity> unpassableEntities, int[][] unpassableMap) {
         stateTime += deltaTime;
         if(stateTime > 2){
             isAttacking = true;
@@ -57,6 +57,6 @@ public class Mage extends Enemy {
             }
             stateTime = 0;
         }
-        super.handlePhysics(deltaTime, player, unpassableEntities);
+        super.handlePhysics(deltaTime, player, unpassableEntities, unpassableMap);
     }
 }

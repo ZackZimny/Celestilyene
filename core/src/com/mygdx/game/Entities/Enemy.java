@@ -6,6 +6,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.GameHelpers.Boxes.Box;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.PriorityQueue;
 
 public class Enemy extends Entity {
     private Texture texture;
@@ -22,7 +24,7 @@ public class Enemy extends Entity {
         setTexture(texture);
     }
 
-    public void handlePhysics(float deltaTime, Player player, ArrayList<Entity> unpassableEntities){
+    public void handlePhysics(float deltaTime, Player player, ArrayList<Entity> unpassableEntities, int[][] unpassableMap){;
         setMovement(player.getHurtBox().getCenter().sub(getHurtBox().getCenter()).nor().scl(deltaTime).scl(speed));
         for(int i = 0; i < player.getHitBoxes().size(); i++){
             if(player.getHitBoxes().get(i).intersects(getHurtBox())){

@@ -38,7 +38,6 @@ public class MyGdxGame extends ApplicationAdapter {
 		camera.setToOrtho(false, 30, 20);
 		camera.update();
 		spriteBatch = new SpriteBatch();
-		unpassableEntities.add(tree);
 		levelLoader = new LevelLoader("Easy6.tmx");
 		levelLoader.generateMap();
 	}
@@ -47,8 +46,9 @@ public class MyGdxGame extends ApplicationAdapter {
 	public void render () {
 		ScreenUtils.clear(0.1f, 0.6f, 0.2f, 1);
 		levelLoader.handlePhysics(Gdx.graphics.getDeltaTime(), shapeRenderer);
+		shapeRenderer.setAutoShapeType(true);
 		spriteBatch.begin();
-		levelLoader.render(camera, spriteBatch);
+		levelLoader.render(camera, spriteBatch, shapeRenderer);
 		spriteBatch.end();
 	}
 	
