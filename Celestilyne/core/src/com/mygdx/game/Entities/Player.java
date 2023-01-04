@@ -2,6 +2,7 @@ package com.mygdx.game.Entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -25,6 +26,7 @@ public class Player extends Entity {
     private TextureRegion currSprite;
     private Texture magicTexture;
     private Texture wand;
+    private Sound magicNoise;
     private float magicMeter = 1f;
     private ArrayList<DynamicBox> magicBoxes = new ArrayList<>();
 
@@ -100,6 +102,8 @@ public class Player extends Entity {
             DynamicBox box = new DynamicBox(getHurtBox().getCenter().add(getMousePos().nor().scl(wand.getWidth())).sub(getLeftHandOffset(), 0),
                     10, 10, getMousePos().nor().scl(7));
             addHitBox(box);
+            magicNoise = Gdx.audio.newSound(Gdx.files.internal("Fireball.ogg"));
+            magicNoise.play(0.1f);
             magicMeter -= 0.2f;
         }
         moveDynamicHitBoxes();
