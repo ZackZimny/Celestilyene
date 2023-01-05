@@ -34,7 +34,7 @@ public class HealthStat{
         stage.addActor(HealthNum);
 
         SpriteBatch HeartBatch = new SpriteBatch();
-        Texture HeartTexture = new Texture(Gdx.files.internal("HeartCopy.png"));
+        Texture HeartTexture = new Texture(Gdx.files.internal("Heart.png"));
         TextureRegion HeartRegion = new TextureRegion(HeartTexture);
 
         Sprite Heart1 = new Sprite(HeartRegion);

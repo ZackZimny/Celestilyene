@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Entities.*;
+import com.mygdx.game.GameHelpers.HealthStat;
 import com.mygdx.game.GameHelpers.LevelLoader;
 import com.badlogic.gdx.audio.Music;
 import java.util.ArrayList;
@@ -49,8 +50,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		levelLoader.generateMap();
 
 		// Handles Music - one song playing on loops
-		GameMusic = Gdx.audio.newMusic(Gdx.files.internal("ZimzMusic2 copy 3.wav"));
+		GameMusic = Gdx.audio.newMusic(Gdx.files.internal("ZimzMusic2 copy 2.wav"));
 		GameMusic.setLooping(true);
+		GameMusic.setVolume(0.1f);
 		GameMusic.play();
 		//creates 3 Hearts for HP, but HP won't go down yet - need Zack to code collision
 		HealthBar = new HealthStat();
@@ -61,7 +63,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	public void render () {
 		ScreenUtils.clear(0.1f, 0.6f, 0.2f, 1);
 
-		Healthbar.renderHealth();
+		HealthBar.renderHealth();
 
 		levelLoader.handlePhysics(Gdx.graphics.getDeltaTime(), shapeRenderer);
 		shapeRenderer.setAutoShapeType(true);
