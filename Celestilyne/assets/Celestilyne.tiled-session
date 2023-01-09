@@ -1,0 +1,148 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "Level1.tmx": {
+            "scale": 1.3299999999999998,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 475.5639097744361,
+                "y": 320.30075187969925
+            }
+        },
+        "Level10.tmx": {
+            "scale": 1.3299999999999998,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 480.07518796992497,
+                "y": 320.30075187969925
+            }
+        },
+        "Level11.tmx": {
+            "scale": 1.3299999999999998,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 480.07518796992497,
+                "y": 320.30075187969925
+            }
+        },
+        "Level12.tmx": {
+            "scale": 1.3299999999999998,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 480.07518796992497,
+                "y": 320.30075187969925
+            }
+        },
+        "Level13.tmx": {
+            "scale": 1.3299999999999998,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 480.07518796992497,
+                "y": 320.30075187969925
+            }
+        },
+        "Level14.tmx": {
+            "scale": 1.3299999999999998,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 480.07518796992497,
+                "y": 320.30075187969925
+            }
+        },
+        "Level15.tmx": {
+            "scale": 1.3299999999999998,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 480.07518796992497,
+                "y": 320.30075187969925
+            }
+        },
+        "Level16.tmx": {
+            "scale": 1.3299999999999998,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 475.5639097744361,
+                "y": 318.796992481203
+            }
+        },
+        "Level2.tmx": {
+            "scale": 1.3299999999999998,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 445.48872180451133,
+                "y": 318.796992481203
+            }
+        },
+        "Level3.tmx": {
+            "scale": 1.3299999999999998,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 444.7368421052632,
+                "y": 318.0451127819549
+            }
+        },
+        "Level4.tmx": {
+            "scale": 1.3299999999999998,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 445.48872180451133,
+                "y": 218.796992481203
+            }
+        },
+        "Level5.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1721,
+                "y": 174
+            }
+        },
+        "Level6.tmx": {
+            "scale": 1.3299999999999998,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 609.3984962406015,
+                "y": 318.796992481203
+            }
+        },
+        "Level7.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 847.5,
+                "y": 240
+            }
+        },
+        "Level8.tmx": {
+            "scale": 1.3299999999999998,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 870.3007518796993,
+                "y": 319.5488721804512
+            }
+        },
+        "Level9.tmx": {
+            "scale": 1.3299999999999998,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 480.07518796992497,
+                "y": 320.30075187969925
+            }
+        }
+    },
+    "last.imagePath": "C:/Users/zzimn/Downloads/Celestiyene-main (1)/Celestiyene-main/Celestilyne/assets",
+    "map.lastUsedFormat": "tmx",
+    "openFiles": [
+    ],
+    "project": "Celestilyne.tiled-project",
+    "recentFiles": [
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.type": 1
+}
