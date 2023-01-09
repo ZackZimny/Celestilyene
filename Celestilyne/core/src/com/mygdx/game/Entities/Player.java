@@ -11,6 +11,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.GameHelpers.Boxes.Box;
 import com.mygdx.game.GameHelpers.Direction;
 import com.mygdx.game.GameHelpers.Boxes.DynamicBox;
+import com.mygdx.game.GameHelpers.GameSounds;
+import com.mygdx.game.Screens.AssetManagerHandler;
+import com.mygdx.game.Screens.ScreenManager;
+import com.mygdx.game.Screens.ScreenProjectionHandler;
 
 import java.util.ArrayList;
 
@@ -26,17 +30,21 @@ public class Player extends Entity {
     private TextureRegion currSprite;
     private Texture magicTexture;
     private Texture wand;
-    private Sound magicNoise;
-    private float magicMeter = 1f;
+    private float soundLevel;
     private ArrayList<DynamicBox> magicBoxes = new ArrayList<>();
+    private int health;
+    private GameSounds gameSounds;
 
-    public Player(int x, int y) {
+    public Player(int x, int y, int health, AssetManagerHandler assetManagerHandler, GameSounds gameSounds) {
         super(new Box(x, y, 20, 22), new ArrayList<Box>());
-        texture = new Texture(Gdx.files.internal("Player.png"));
-        magicTexture = new Texture(Gdx.files.internal("Magic.png"));
-        wand = new Texture(Gdx.files.internal("Wand.png"));
+        texture = assetManagerHandler.getTexture("Player.png");
         TextureRegion[][] regions = TextureRegion.split(texture,
                 texture.getWidth() / 4, texture.getHeight());
+        magicTexture = assetManagerHandler.getTexture("Magic.png");
+        wand = assetManagerHandler.getTexture("Wand.png");
+        soundLevel = soundLevel / 50f;
+        this.health = health;
+        this.gameSounds = gameSounds;
         //down right up left
         downSprite = regions[0][0];
         rightSprite = regions[0][1];
@@ -98,19 +106,13 @@ public class Player extends Entity {
             removeIntersectedHitBoxes(e);
         }
         changePos(getMovement());
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && magicMeter > 0){
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
             DynamicBox box = new DynamicBox(getHurtBox().getCenter().add(getMousePos().nor().scl(wand.getWidth())).sub(getLeftHandOffset(), 0),
                     10, 10, getMousePos().nor().scl(7));
             addHitBox(box);
-            magicNoise = Gdx.audio.newSound(Gdx.files.internal("Fireball.ogg"));
-            magicNoise.play(0.1f);
-            magicMeter -= 0.2f;
+            gameSounds.playPlayerShot();
         }
         moveDynamicHitBoxes();
-        magicMeter += 0.005f;
-        if(magicMeter > 1){
-            magicMeter = 1;
-        }
     }
 
     @Override
@@ -118,6 +120,7 @@ public class Player extends Entity {
         Vector2 center = getHurtBox().getCenter();
         float xPos = center.x - currSprite.getRegionWidth() / 2f;
         float yPos = center.y - currSprite.getRegionHeight() / 2f;
+        spriteBatch.begin();
         spriteBatch.draw(currSprite, xPos, yPos);
         for(Box hitBox : getHitBoxes()){
             spriteBatch.draw(magicTexture, hitBox.getX(), hitBox.getY(), 16, 16);
@@ -126,15 +129,27 @@ public class Player extends Entity {
         spriteBatch.draw(TextureRegion.split(wand, wand.getWidth(), wand.getHeight())[0][0],
                 center.x - leftHand, center.y, wand.getWidth() / 2f,
                 0, wand.getWidth(), wand.getHeight(), 1, 1, getMousePos().angleDeg() - 90);
+        spriteBatch.end();
     }
 
+    public void removeHealth() {
+        health -= 1;
+    }
 
     private float getLeftHandOffset(){
         return getMousePos().x < 0 ? currSprite.getRegionWidth() / 2f : 0;
     }
 
     private Vector2 getMousePos(){
-        return new Vector2(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY()).sub(getHurtBox().getCenter()).nor();
+        Vector2 mousePos = ScreenProjectionHandler.getMousePos();
+        return mousePos.sub(getHurtBox().getCenter()).nor();
     }
 
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
 }

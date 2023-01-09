@@ -8,23 +8,23 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.GameHelpers.Boxes.Box;
 import com.mygdx.game.GameHelpers.Boxes.DynamicBox;
+import com.mygdx.game.Screens.AssetManagerHandler;
 
 import java.util.ArrayList;
 
 public class Mage extends Enemy {
     private Texture texture;
-    private Animation<TextureRegion> attackAnimation;
     private float stateTime = 0f;
     private boolean isAttacking = false;
     private TextureRegion currentFrame;
     private Texture magicTexture;
     private TextureRegion[] frames;
-    public Mage(float x, float y) {
-        super(x, y, 30, 32, 30, "Mage.png");
-        texture = new Texture(Gdx.files.internal("Mage.png"));
+    public Mage(float x, float y, AssetManagerHandler assetManagerHandler) {
+        super(x, y, 30, 32, 60, assetManagerHandler.getTexture("Mage.png"));
+        texture = assetManagerHandler.getTexture("Mage.png");
         frames = TextureRegion.split(texture, 32, 32)[0];
         currentFrame = frames[0];
-        magicTexture = new Texture(Gdx.files.internal("Fireball.png"));
+        magicTexture = assetManagerHandler.getTexture("Fireball.png");
     }
 
     @Override
@@ -35,14 +35,12 @@ public class Mage extends Enemy {
             currentFrame = frames[0];
             isAttacking = false;
         }
-        if(isHit()){
-            stateTime = 0f;
-        }
+        spriteBatch.begin();
         spriteBatch.draw(currentFrame, getHurtBox().getX(), getHurtBox().getY());
         for(Box hitBox : getHitBoxes()){
             spriteBatch.draw(magicTexture, hitBox.getX(), hitBox.getY());
         }
-
+        spriteBatch.end();
     }
 
     @Override

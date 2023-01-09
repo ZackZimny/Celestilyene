@@ -1,83 +1,60 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.mygdx.game.Entities.*;
-import com.mygdx.game.GameHelpers.HealthStat;
-import com.mygdx.game.GameHelpers.LevelLoader;
-import com.badlogic.gdx.audio.Music;
-import java.util.ArrayList;
-import java.util.Iterator;
+import com.mygdx.game.Screens.FontHandler;
+import com.mygdx.game.Screens.ScreenManager;
+import com.mygdx.game.Screens.ScreenProjectionHandler;
 
-public class MyGdxGame extends ApplicationAdapter {
+public class MyGdxGame extends ApplicationAdapter implements ApplicationListener {
 	// initializes variables
-	Player player;
-	ArrayList<Enemy> enemies = new ArrayList<>();
-	ArrayList<Entity> unpassableEntities = new ArrayList<>();
-	Entity tree;
-	ShapeRenderer shapeRenderer;
-	OrthographicCamera camera;
-	AssetManager assetManager;
-	SpriteBatch spriteBatch;
-	LevelLoader levelLoader;
-	Music GameMusic;
-	HealthStat HealthBar;
-
-
+	private SpriteBatch spriteBatch;
+	private ShapeRenderer shapeRenderer;
+	private ScreenManager screenManager;
+	private FontHandler fontHandler;
+	private GlyphLayout glyphLayout;
+	private String loadingText = "Loading...";
+	private boolean loaded = false;
+	private int screenWidth = (int) ScreenProjectionHandler.getWorldWidth();
+	private int screenHeight = (int) ScreenProjectionHandler.getWorldHeight();
 	@Override
 	public void create () {
-		shapeRenderer = new ShapeRenderer();
-		assetManager = new AssetManager();
-
-		// setup for camera
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 30, 20);
-		camera.update();
-
 		spriteBatch = new SpriteBatch();
-		levelLoader = new LevelLoader("Easy6.tmx");
-		levelLoader.generateMap();
-
-		// Handles Music - one song playing on loops
-		GameMusic = Gdx.audio.newMusic(Gdx.files.internal("ZimzMusic2 copy 2.wav"));
-		GameMusic.setLooping(true);
-		GameMusic.setVolume(0.1f);
-		GameMusic.play();
-		//creates 3 Hearts for HP, but HP won't go down yet - need Zack to code collision
-		HealthBar = new HealthStat();
-		HealthBar.CreateHealth(100, 400, 200, 100);
+		fontHandler = new FontHandler();
+		glyphLayout = new GlyphLayout();
+		glyphLayout.setText(fontHandler.getFont(), loadingText);
+		shapeRenderer = new ShapeRenderer();
+		shapeRenderer.setAutoShapeType(true);
+		screenManager = new ScreenManager();
 	}
 
 	@Override
 	public void render () {
-		ScreenUtils.clear(0.1f, 0.6f, 0.2f, 1);
-
-		HealthBar.renderHealth();
-
-		levelLoader.handlePhysics(Gdx.graphics.getDeltaTime(), shapeRenderer);
-		shapeRenderer.setAutoShapeType(true);
-
-		//begins and ends rendering
-		spriteBatch.begin();
-		levelLoader.render(camera, spriteBatch, shapeRenderer);
-		spriteBatch.end();
+		ScreenUtils.clear(Color.BLACK);
+		ScreenProjectionHandler.getAspectRatioViewport().apply();
+		if(!loaded) {
+			screenManager.getAssetManagerHandler().getAssetManager().finishLoading();
+			screenManager.load();
+			screenManager.loadGameLoop();
+			loaded = true;
+		} else {
+			if(screenManager.isLoaded())
+				screenManager.render(spriteBatch, shapeRenderer);
+		}
 	}
-	
+
+	@Override
+	public void resize(int width, int height){
+		ScreenProjectionHandler.getAspectRatioViewport().update(width, height, true);
+		screenWidth = width;
+		screenHeight = height;
+	}
 	@Override
 	public void dispose () {
-		shapeRenderer.dispose();
-		spriteBatch.dispose();		//disposes assets after program is done using them
-		assetManager.dispose();
 	}
 }

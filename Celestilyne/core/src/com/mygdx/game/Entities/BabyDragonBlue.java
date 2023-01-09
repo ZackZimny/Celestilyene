@@ -1,14 +1,13 @@
 package com.mygdx.game.Entities;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.GameHelpers.Boxes.DynamicBox;
+import com.mygdx.game.Screens.AssetManagerHandler;
 
 public class BabyDragonBlue extends BabyDragon {
-    public BabyDragonBlue(float x, float y) {
-        super(x, y);
-        setTexture(new Texture(Gdx.files.internal("BabyDragonBlue.png")));
+    public BabyDragonBlue(float x, float y, AssetManagerHandler assetManager) {
+        super(x, y, assetManager);
+        setTexture(assetManager.getTexture("BabyDragonBlue.png"));
         createAnimations();
     }
 

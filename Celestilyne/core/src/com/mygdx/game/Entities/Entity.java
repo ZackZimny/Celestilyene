@@ -73,7 +73,9 @@ public class Entity {
     }
 
     public void render(SpriteBatch spriteBatch){
+        spriteBatch.begin();
         spriteBatch.draw(texture, getHurtBox().getX() + xOffset, getHurtBox().getY() + yOffset);
+        spriteBatch.end();
     }
 
     protected void changePos(Vector2 v){
