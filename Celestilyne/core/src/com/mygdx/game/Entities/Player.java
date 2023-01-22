@@ -55,19 +55,30 @@ public class Player extends Entity {
     }
 
     public void updateMoveVec(){
-        int[] keys = {Input.Keys.W, Input.Keys.S, Input.Keys.A, Input.Keys.D};
-        Vector2[] moves = {new Vector2(0,1), new Vector2(0, -1),
-                new Vector2(-1, 0), new Vector2(1, 0)};
-        Direction[] directions = {Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT};
         moving = false;
-        moveVec = new Vector2(0, 0);
-        for(int i = 0; i < keys.length; i++){
-            if(Gdx.input.isKeyPressed(keys[i])){
-                moveVec = moves[i];
-                moving = true;
-                direction = directions[i];
-            }
+        moveVec = new Vector2(0,0);
+        Input in = Gdx.input;
+        if (in.isKeyPressed(Input.Keys.A) || in.isKeyPressed(Input.Keys.LEFT)){
+            moveVec.x = -1;
+            direction = Direction.LEFT;
+            moving = true;
         }
+        if (in.isKeyPressed(Input.Keys.D) || in.isKeyPressed(Input.Keys.RIGHT)){
+            moveVec.x = 1;
+            direction = Direction.RIGHT;
+            moving = true;
+        }
+        if(in.isKeyPressed(Input.Keys.S) || in.isKeyPressed(Input.Keys.DOWN)){
+            moveVec.y = -1;
+            direction = Direction.DOWN;
+            moving = true;
+        }
+        if(in.isKeyPressed(Input.Keys.W) || in.isKeyPressed(Input.Keys.UP)){
+            moveVec.y = 1;
+            direction = Direction.UP;
+            moving = true;
+        }
+
     }
 
     private void handleAnimation(){
