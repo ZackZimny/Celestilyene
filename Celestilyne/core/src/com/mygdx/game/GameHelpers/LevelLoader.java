@@ -1,45 +1,52 @@
 package com.mygdx.game.GameHelpers;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.mygdx.game.Entities.*;
-import com.mygdx.game.Screens.AssetManagerHandler;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.InputMismatchException;
 
+/**
+ * Loads and displays levels during the GameLoop
+ */
 public class LevelLoader {
-    private TiledMap tiledMap;
-    private TiledMapTileLayer objectLayer;
+    //TileLayer containing the entities within the screen
+    private final TiledMapTileLayer objectLayer;
     private ArrayList<Entity> entities = new ArrayList<>();
     private ArrayList<Enemy> enemies = new ArrayList<>();
-    private ArrayList<Entity> unpassableEntities = new ArrayList<>();
-    private int[][] unpassableMap;
+    //entities that can not be walked through
+    private final ArrayList<Entity> unpassableEntities = new ArrayList<>();
     private Player player;
     private int playerHealth;
-    private AssetManagerHandler assetManagerHandler;
-    private GameSounds gameSounds;
+    private final AssetManagerHandler assetManagerHandler;
+    private final GameSounds gameSounds;
+    private final String fileName;
+
+    /**
+     * Creates a new LevelLoader
+     * @param fileName name of the file with the Tilemap in it with file extension .tmx
+     * @param playerHealth health that the player should load in with
+     * @param assetManagerHandler assetManagerHandler with all assets loaded in
+     * @param gameSounds all gameSounds loaded in
+     */
     public LevelLoader(String fileName, int playerHealth, AssetManagerHandler assetManagerHandler, GameSounds gameSounds){
-        tiledMap = new TmxMapLoader().load(fileName);
+        TiledMap tiledMap = new TmxMapLoader().load(fileName);
         objectLayer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
-        unpassableMap = new int[objectLayer.getHeight()][objectLayer.getWidth()];
         this.playerHealth = playerHealth;
         this.assetManagerHandler = assetManagerHandler;
         this.gameSounds = gameSounds;
+        this.fileName = fileName;
     }
 
-    public void generateMap(){
+    /**
+     * generates the map based on the data passed in through the .tmx file
+     */
+    public void generateMap() throws InputMismatchException {
         entities = new ArrayList<>();
         enemies = new ArrayList<>();
         for(int i = objectLayer.getHeight() - 1; i >= 0; i--){
@@ -54,11 +61,24 @@ public class LevelLoader {
         }
     }
 
+    /**
+     * gets a texture from the assetManager reference
+     * @param fileName name of the texture file
+     * @return Texture object connected to the fileName
+     */
     private Texture getTexture(String fileName){
         return assetManagerHandler.getAssetManager().get(fileName, Texture.class);
     }
 
-    private Entity generateEntity(int id, int x, int y){
+    /**
+     * Generates the entity within the position given
+     * @param id id number of the entity; determines which entity to generate
+     * @param x x position of the entity in a 32x32 grid
+     * @param y y position of the entity in a 32x32 grid
+     * @return Entity created at the position and id number
+     * @throws InputMismatchException if an id number does not match up with any of the defined id numbers 1-6
+     */
+    private Entity generateEntity(int id, int x, int y) throws InputMismatchException {
         switch(id){
             case 1:
                 BabyDragonBlue babyDragonBlue = new BabyDragonBlue(x*32, y*32, assetManagerHandler);
@@ -76,21 +96,22 @@ public class LevelLoader {
                 enemies.add(mage);
                 return mage;
             case 5:
-                Entity tree = new Entity(x * 32, y * 32, 42, 42, -11, -11);
-                tree.setTexture(getTexture("Tree.png"));
-                tree.setPassable(true);
+                Tree tree = new Tree(x * 32, y * 32, assetManagerHandler);
                 unpassableEntities.add(tree);
-                unpassableMap[y][x] = 1;
                 return tree;
             case 6:
-                Enemy slime = new Enemy(x*32, y*32, 32, 32, 100, getTexture("Slime.png"));
+                Enemy slime = new Slime(x*32, y*32, getTexture("Slime.png"));
                 enemies.add(slime);
                 return slime;
         }
-        System.out.println("Entity not found " + id);
-        return new Entity(0, 0, 0, 0);
+        throw new InputMismatchException("There is an undefined tile number within this map" + fileName);
     }
 
+    /**
+     * Displays the level to the screen
+     * @param camera game camera that displays the whole game
+     * @param spriteBatch renders the level
+     */
     public void render(Camera camera, SpriteBatch spriteBatch){
         camera.update();
         spriteBatch.setProjectionMatrix(camera.combined);
@@ -99,11 +120,15 @@ public class LevelLoader {
         }
     }
 
-    public void handlePhysics(float deltaTime, ShapeRenderer shapeRenderer){
-        player.move(deltaTime, unpassableEntities, shapeRenderer);
+    /**
+     * handles all position updates and physics within the game
+     * @param deltaTime change in time in seconds between the current frame and the last frame
+     */
+    public void handlePhysics(float deltaTime){
+        player.move(deltaTime, unpassableEntities);
         ArrayList<Enemy> deadEnemies = new ArrayList<>();
         for(Enemy e : enemies){
-            e.handlePhysics(deltaTime, player, unpassableEntities, unpassableMap);
+            e.handlePhysics(deltaTime, player, unpassableEntities);
             if(e.isDead())
                 deadEnemies.add(e);
         }
@@ -111,12 +136,24 @@ public class LevelLoader {
         entities.removeAll(deadEnemies);
     }
 
+    /**
+     * determines if all enemies have been killed
+     * @return if all enemies have been killed
+     */
     public boolean isCompleted(){
         return enemies.isEmpty();
     }
 
+    /**
+     * gets the current player health
+     * @return current player health
+     */
     public int getPlayerHealth(){ return player.getHealth(); }
 
+    /**
+     * replaces the current player health with a new value
+     * @param playerHealth new player health value
+     */
     public void setPlayerHealth(int playerHealth) {
         this.playerHealth = playerHealth;
     }

@@ -8,8 +8,10 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.GameHelpers.Boxes.Box;
 
+/**
+ * Renders a slider for changing settings
+ */
 public class Slider extends MouseInteraction {
     private int percentage = 50;
     private final float x;
@@ -17,7 +19,7 @@ public class Slider extends MouseInteraction {
     private final String text;
     private final BitmapFont font;
     private float circleX;
-    private GlyphLayout layout;
+    private final GlyphLayout layout;
 
     /**
      * displays a 100 pixel width slider at the specified position

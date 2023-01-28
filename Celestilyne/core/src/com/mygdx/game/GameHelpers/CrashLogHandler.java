@@ -37,6 +37,7 @@ public class CrashLogHandler {
     public static void logSevere(String message, String report){
         logger.severe(message);
         logger.severe(report);
+        logger.severe(EventLogHandler.getLogs());
         JOptionPane.showMessageDialog(null, message +
                 "\nPlease restart the game. " +
                 "\nIf this problem persists, please email us the crash.txt file located in the root folder. Email us at"

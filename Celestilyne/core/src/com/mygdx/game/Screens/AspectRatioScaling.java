@@ -3,8 +3,15 @@ package com.mygdx.game.Screens;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Scaling;
 
+/**
+ * Determines scale based on a multiple of 2 to prevent pixel flickering
+ */
 public class AspectRatioScaling {
-    public static final Scaling getScaling() {
+    /**
+     * Determines the size at which the screen should be displayed at
+     * @return Vector of the scaling of the width and height
+     */
+    public static Scaling getScaling() {
         return new Scaling() {
             @Override
             public Vector2 apply(float sourceWidth, float sourceHeight, float targetWidth, float targetHeight) {

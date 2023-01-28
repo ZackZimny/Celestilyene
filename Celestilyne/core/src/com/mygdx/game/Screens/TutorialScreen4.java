@@ -1,6 +1,13 @@
 package com.mygdx.game.Screens;
 
+import com.mygdx.game.GameHelpers.AssetManagerHandler;
+
 public class TutorialScreen4 extends TutorialScreen {
+
+    /**
+     * Initializes tutorial screen
+     * @param assetManagerHandler used to load sprites for informational purposes
+     */
     public TutorialScreen4(AssetManagerHandler assetManagerHandler){
         super("Navigating the Options Menu", ScreenState.TUTORIAL4, ScreenState.TUTORIAL3, ScreenState.MAIN_MENU,
                 "Use the sliders in the menu to change the volume of the background music and sound effects." +

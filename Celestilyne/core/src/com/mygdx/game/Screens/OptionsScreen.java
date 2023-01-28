@@ -8,12 +8,20 @@ import com.mygdx.game.GameHelpers.RuntimeConfigurations;
 
 import java.util.LinkedHashMap;
 
+/**
+ * Screen where different runtime configurations can be altered
+ */
 public class OptionsScreen extends Screen {
-    private Slider sfxSlider;
-    private Slider musicSlider;
-    private Checkbox fullscreenCheckbox;
+    private final Slider sfxSlider;
+    private final Slider musicSlider;
+    private final Checkbox fullscreenCheckbox;
     private String name;
-    private RuntimeConfigurations runtimeConfigurations;
+    private final RuntimeConfigurations runtimeConfigurations;
+
+    /**
+     * Initializes options screen
+     * @param runtimeConfigurations configuration state to display
+     */
     public OptionsScreen(RuntimeConfigurations runtimeConfigurations){
         super("Options", ScreenState.OPTIONS);
         this.runtimeConfigurations = runtimeConfigurations;
@@ -31,6 +39,9 @@ public class OptionsScreen extends Screen {
         name = runtimeConfigurations.getName();
     }
 
+    /**
+     * handles keystrokes when entering a new name
+     */
     private void handleInput(){
         //Libgdx key bindings are 29 - 54
         //ASCII starts at 65
@@ -45,6 +56,11 @@ public class OptionsScreen extends Screen {
         }
     }
 
+    /**
+     * Displays the OptionsScreen
+     * @param shapeRenderer shapeRenderer to diplay buttons
+     * @param spriteBatch displays text
+     */
     @Override
     public void render(ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
         sfxSlider.handleInput();

@@ -9,8 +9,12 @@ import com.mygdx.game.Entities.Player;
 import java.util.ArrayList;
 
 public class TutorialScreen1 extends TutorialScreen {
+    private final Player player;
 
-    private Player player;
+    /**
+     * Initializes tutorialScreen1
+     * @param player dummy player object to move around tutorial screen
+     */
     public TutorialScreen1(Player player) {
         super("Moving The Player", ScreenState.TUTORIAL1, ScreenState.MAIN_MENU, ScreenState.TUTORIAL2,
                 "Move the wizard using the WASD keys where W is up, A is left, S is down, and D is right. " +
@@ -20,9 +24,14 @@ public class TutorialScreen1 extends TutorialScreen {
         this.player = player;
     }
 
+    /**
+     * displays this screen
+     * @param shapeRenderer displays button rectangles
+     * @param spriteBatch displays text and images
+     */
     @Override
     public void render(ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
-        player.move(Gdx.graphics.getDeltaTime(), new ArrayList<Entity>(), shapeRenderer);
+        player.move(Gdx.graphics.getDeltaTime(), new ArrayList<Entity>());
         player.render(spriteBatch);
         super.render(shapeRenderer, spriteBatch);
     }

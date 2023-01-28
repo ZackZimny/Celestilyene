@@ -3,9 +3,15 @@ package com.mygdx.game.Screens;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.mygdx.game.GameHelpers.AssetManagerHandler;
 
 public class TutorialScreen2 extends TutorialScreen {
-    private Texture[] textures;
+    private final Texture[] textures;
+
+    /**
+     * Initializes tutorial screen
+     * @param assetManagerHandler used to load sprites for informational purposes
+     */
     public TutorialScreen2(AssetManagerHandler assetManagerHandler) {
         super("Enemies", ScreenState.TUTORIAL2, ScreenState.TUTORIAL1, ScreenState.TUTORIAL3,
                 "Don't run into enemies or get hit by their fireballs. " +
@@ -19,6 +25,11 @@ public class TutorialScreen2 extends TutorialScreen {
         };
     }
 
+    /**
+     * displays this screen
+     * @param shapeRenderer displays button rectangles
+     * @param spriteBatch displays text and images
+     */
     @Override
     public void render(ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
         float padding = ScreenProjectionHandler.getWorldWidth() / 8f;

@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
+/**
+ * Handles the resizing and recoloring of the "FFFFORWA.TTF" font
+ */
 public class FontHandler {
     private final BitmapFont font;
     private final FreeTypeFontGenerator fontGenerator;
@@ -13,7 +16,7 @@ public class FontHandler {
     private final GlyphLayout layout = new GlyphLayout();
 
     /**
-     * Loads the font from the "FFFORWA.TTF" FILE
+     * Loads the font from the "FFFFORWA.TTF" FILE
      */
     public FontHandler(){
         fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("FFFFORWA.TTF"));
@@ -44,13 +47,5 @@ public class FontHandler {
 
     public BitmapFont getFont() {
         return font;
-    }
-
-    public FreeTypeFontGenerator.FreeTypeFontParameter getParameter() {
-        return parameter;
-    }
-
-    public FreeTypeFontGenerator getFontGenerator() {
-        return fontGenerator;
     }
 }

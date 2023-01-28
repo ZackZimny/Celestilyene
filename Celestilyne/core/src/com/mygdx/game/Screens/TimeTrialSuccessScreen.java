@@ -6,17 +6,13 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.util.LinkedHashMap;
 
-/**
- * Screen that displays once the player has lost all of his health
- */
-public class GameOverScreen extends Screen {
-    private int score;
-
+public class TimeTrialSuccessScreen extends Screen{
+    private String time = "not set";
     /**
      * initializes the gameOver screen
      */
-    public GameOverScreen(){
-        super("Game Over", ScreenState.GAME_OVER);
+    public TimeTrialSuccessScreen(){
+        super("Success!", ScreenState.SUCCESS);
         LinkedHashMap<String, ScreenState> screenStateMap = new LinkedHashMap<>();
         screenStateMap.put("Play Again", ScreenState.GAME_LOOP);
         screenStateMap.put("Return to Main Menu", ScreenState.MAIN_MENU);
@@ -30,8 +26,8 @@ public class GameOverScreen extends Screen {
      */
     @Override
     public void render(ShapeRenderer shapeRenderer, SpriteBatch spriteBatch){
-        ScreenManager.renderBackground(shapeRenderer, Color.RED);
-        String scoreString = String.format("Your Score: %d", score);
+        ScreenManager.renderBackground(shapeRenderer, Color.LIME);
+        String scoreString = "Your Time: " + time;
         spriteBatch.begin();
         getTitleFontHandler().getFont().draw(spriteBatch, scoreString,
                 getCenterTextX(scoreString), ScreenProjectionHandler.getWorldHeight() - 150);
@@ -39,7 +35,9 @@ public class GameOverScreen extends Screen {
         super.render(shapeRenderer, spriteBatch);
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setTime(float seconds) {
+        int minutes = (int) (seconds / 60);
+        seconds -= minutes * 60;
+        time = String.format("%d:%.2f", minutes, seconds);
     }
 }

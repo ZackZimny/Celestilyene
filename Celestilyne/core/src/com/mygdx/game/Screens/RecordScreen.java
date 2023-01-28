@@ -9,9 +9,17 @@ import com.mygdx.game.GameHelpers.Record;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+/**
+ * Displays 7 highest records to the screen
+ */
 public class RecordScreen extends Screen {
     private ArrayList<Record> records;
-    private FontHandler fontHandler;
+    private final FontHandler fontHandler;
+
+    /**
+     * Initializes Record Screen
+     * @param records list of all records ordered from greatest to least
+     */
     public RecordScreen(ArrayList<Record> records){
         super("Records", ScreenState.RECORDS);
         this.records = records;
@@ -21,6 +29,11 @@ public class RecordScreen extends Screen {
         fontHandler = new FontHandler(15, Color.BLACK);
     }
 
+    /**
+     * Displays the records to the screen
+     * @param shapeRenderer renders button rectangles
+     * @param spriteBatch renders text
+     */
     @Override
     public void render(ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
         GlyphLayout layout = new GlyphLayout();

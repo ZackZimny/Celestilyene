@@ -1,6 +1,13 @@
 package com.mygdx.game.Screens;
 
+import com.mygdx.game.GameHelpers.AssetManagerHandler;
+
 public class TutorialScreen3 extends TutorialScreen {
+
+    /**
+     * Initializes tutorial screen
+     * @param assetManagerHandler used to load sprites for informational purposes
+     */
     public TutorialScreen3(AssetManagerHandler assetManagerHandler) {
         super("Navigating the Main Menu", ScreenState.TUTORIAL3, ScreenState.TUTORIAL2, ScreenState.TUTORIAL4,
                 "The Start button begins the game. The Tutorial button brings you to the menu you are currently in. " +
