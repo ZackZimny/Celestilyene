@@ -1,13 +1,13 @@
 package com.mygdx.game.Screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.mygdx.game.GameHelpers.Boxes.Box;
 
+/**
+ * Button that interacts with the mouse and can be clicked or hovered
+ */
 public class Button extends MouseInteraction {
     //used for text centering
     private final GlyphLayout layout = new GlyphLayout();
@@ -15,8 +15,7 @@ public class Button extends MouseInteraction {
     private final Color bgColor;
     //used to create text
     private final FontHandler fontHandler = new FontHandler();
-    private boolean isSelected = false;
-    private ScreenState screenState;
+    private final ScreenState screenState;
     /**
      * Creates a Button at the specified position
      * @param x x position of the bottom left corner of the button
@@ -42,7 +41,7 @@ public class Button extends MouseInteraction {
     public void render(ShapeRenderer shapeRenderer, SpriteBatch spriteBatch){
         shapeRenderer.begin();
         shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(isSelected ? Color.WHITE : bgColor);
+        shapeRenderer.setColor(bgColor);
         shapeRenderer.rect(x, y ,width, height);
         shapeRenderer.end();
         spriteBatch.begin();
@@ -51,15 +50,11 @@ public class Button extends MouseInteraction {
         spriteBatch.end();
     }
 
+    /**
+     * gets what screen this button should transition to when clicked
+     * @return ScreenState of screen change
+     */
     public ScreenState getScreenState() {
         return screenState;
-    }
-
-    public void setSelected(boolean selected) {
-        isSelected = selected;
-    }
-
-    public boolean isSelected() {
-        return isSelected;
     }
 }

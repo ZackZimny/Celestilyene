@@ -5,8 +5,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+/**
+ * Handles screen sizing and projection
+ */
 public class ScreenProjectionHandler {
-    private static AspectRatioViewport aspectRatioViewport = new AspectRatioViewport(getWorldWidth(), getWorldHeight());
+    private static final AspectRatioViewport aspectRatioViewport = new AspectRatioViewport(getWorldWidth(), getWorldHeight());
     public static float getWorldWidth() {
         return 32 * 4 * 7.5f;
     }
@@ -14,6 +17,11 @@ public class ScreenProjectionHandler {
         return 32 * 3 * 7.5f;
     }
     public static Viewport getAspectRatioViewport() { return aspectRatioViewport; }
+
+    /**
+     * gets the mouse position within the projected world for proper handling
+     * @return unprojected mouse position Vector2
+     */
     public static Vector2 getMousePos() {
         Vector3 mousePos = ScreenProjectionHandler.getAspectRatioViewport().unproject(
                 new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));

@@ -50,16 +50,6 @@ public class Box {
     }
 
     /**
-     * Returns weather the Box object contains the x and y position of the parameters
-     * @param px point x to be checked
-     * @param py point y to be checked
-     * @return boolean that states if the Box object contains the x and y position of the parameters
-     */
-    public boolean intersects(float px, float py){
-        return px > x && px < x + width && py > y && py < y + height;
-    }
-
-    /**
      * Checks weather the four corners of a box are within this Box object
      * @param box box to be checked
      * @return if the corners of the parameter Box object are within this Box object

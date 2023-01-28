@@ -1,5 +1,8 @@
 package com.mygdx.game.Screens;
 
+/**
+ * holds all possible screens and associates them with a value
+ */
 public enum ScreenState {
     MAIN_MENU,
     TUTORIAL1,
@@ -9,5 +12,6 @@ public enum ScreenState {
     OPTIONS,
     GAME_OVER,
     GAME_LOOP,
-    RECORDS
+    RECORDS,
+    SUCCESS
 }

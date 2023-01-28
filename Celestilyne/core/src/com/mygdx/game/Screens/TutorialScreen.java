@@ -2,18 +2,27 @@ package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.scenes.scene2d.utils.Layout;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+/**
+ * Provides a template for creating Tutorial screens
+ */
 public class TutorialScreen extends Screen {
-    private FontHandler fontHandler;
-    private String[] lines;
+    private final FontHandler fontHandler;
+    private final String[] lines;
     private Texture image;
+
+    /**
+     * Initializes the tutorial screen without an image
+     * @param title title at the top of the screen
+     * @param defaultScreen associated ScreenState
+     * @param previousScreen previous ScreenState navigated to with back button
+     * @param nextScreen next ScreenState navigated to with next button
+     * @param text informational text to display
+     */
     public TutorialScreen(String title, ScreenState defaultScreen, ScreenState previousScreen, ScreenState nextScreen,
                           String text) {
         super(title, defaultScreen);
@@ -28,6 +37,15 @@ public class TutorialScreen extends Screen {
         }
     }
 
+    /**
+     * Initializes the tutorial screen with an image
+     * @param title title at the top of the screen
+     * @param defaultScreen associated ScreenState
+     * @param previousScreen previous ScreenState navigated to with back button
+     * @param nextScreen next ScreenState navigated to with next button
+     * @param text informational text to display
+     * @param image image to be displayed above the middle of the screen
+     */
     public TutorialScreen(String title, ScreenState defaultScreen, ScreenState previousScreen, ScreenState nextScreen,
                           String text, Texture image){
         super(title, defaultScreen);
@@ -43,6 +61,12 @@ public class TutorialScreen extends Screen {
         }
     }
 
+
+    /**
+     * displays this screen
+     * @param shapeRenderer displays button rectangles
+     * @param spriteBatch displays text and images
+     */
     @Override
     public void render(ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
         spriteBatch.begin();

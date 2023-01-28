@@ -2,18 +2,22 @@ package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.GameHelpers.Boxes.Box;
 
+/**
+ * Handles mouse interaction with UI elements
+ */
 public class MouseInteraction extends Box {
+
+    /**
+     * Initializes mouseInteraction
+     * @param x left-hand side x position
+     * @param y bottom side y position
+     * @param width width of the collision box
+     * @param height height of the collision box
+     */
     public MouseInteraction(float x, float y, float width, float height) {
         super(x, y, width, height);
-    }
-
-    public MouseInteraction(Vector2 position, float width, float height) {
-        super(position, width, height);
     }
 
     /**
